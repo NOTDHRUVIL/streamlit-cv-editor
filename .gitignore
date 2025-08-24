@@ -1,0 +1,13 @@
+# Virtual Environment
+venv/
+
+# IDE and OS files
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Sensitive Files
+.env
+*.pdf

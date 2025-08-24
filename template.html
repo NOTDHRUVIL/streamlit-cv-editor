@@ -1,0 +1,77 @@
+<!-- template.html - FINAL VERSION WITH EMBEDDED CSS -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ summary.name }} CV</title>
+    <style>
+        /* This is the high-density CSS, now embedded directly in the template */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 0;
+        }
+        h1 { /* Name */
+            font-size: 22pt; text-align: left; margin-bottom: 0px; font-weight: 600; letter-spacing: 0;
+        }
+        p.contact-info { /* Contact Details */
+            font-size: 9.5pt; text-align: left; margin-top: 0; margin-bottom: 8px; color: #333;
+        }
+        h2 { /* Section Titles */
+            font-size: 10.5pt; font-weight: 700; color: #000; border-bottom: 1.5px solid #000;
+            padding-bottom: 1px; margin-top: 12px; margin-bottom: 6px; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        p.summary-text { text-align: justify; margin-top: 0; font-size: 10pt; }
+        ul { padding-left: 17px; margin-top: 3px; list-style-type: disc; }
+        li { margin-bottom: 5px; padding-left: 3px; text-align: justify; }
+        li strong { font-weight: 700; }
+        p.job-header { font-size: 10.5pt; font-weight: 700; margin-top: 8px; margin-bottom: 3px; }
+        span.company { font-weight: 400; }
+    </style>
+</head>
+<body>
+    <h1>{{ summary.name if summary.name else "CANDIDATE NAME" }}</h1>
+    <p class="contact-info">{{ summary.contact if summary.contact else "Contact Information" }}</p>
+
+    <h2>SUMMARY</h2>
+    <p class="summary-text">{{ summary.summary_text if summary.summary_text else "Your professional summary will appear here." }}</p>
+
+    <h2>COMPETENCIES</h2>
+    <ul>
+    {% for item in competencies %}
+        <li><strong>{{ item.title }}:</strong> {{ item.description }}</li>
+    {% else %}
+        <li>Your generated competencies will appear here.</li>
+    {% endfor %}
+    </ul>
+
+    <h2>PROFESSIONAL EXPERIENCE</h2>
+    {% for job in professional_history %}
+        <p class="job-header">
+            <strong>{{ job.role }}</strong>, <span class="company">{{ job.company }} | {{ job.dates }}</span>
+        </p>
+        <ul>
+        {% for accomplishment in job.accomplishments %}
+            <li>{{ accomplishment }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your generated professional experience will appear here.</p>
+    {% endfor %}
+
+    {% if awards_leadership %}
+    <h2>AWARDS & LEADERSHIP</h2>
+    <ul>
+    {% for category, items in awards_leadership.items() %}
+        <li><strong>{{ category }}:</strong> {{ items }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h2>EDUCATION</h2>
+    <p>{{ summary.education if summary.education else "Your education details will appear here." }}</p>
+</body>
+</html>
